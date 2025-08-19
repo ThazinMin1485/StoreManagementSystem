@@ -1,5 +1,6 @@
 package com.store.system.entity;
 
+import com.store.system.dto.CategoryDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,16 @@ public class Category {
 
     @Column(nullable = false)
     Boolean del_flag;
+
+    public Category(){
+        super();
+    }
+
+    public Category(CategoryDTO dto) {
+        this.id = dto.getId();
+        this.category_name = dto.getCategory_name();
+        this.del_flag = dto.getDel_flag();
+    }
 
     public Long getId() {
         return id;

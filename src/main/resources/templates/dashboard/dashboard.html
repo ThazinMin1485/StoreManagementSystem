@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body th:fragment="dashboard(menuItems)">
+<div class="container">
+    <div th:each="row : ${menuItems}" class="row justify-content-center mb-3">
+        <div th:each="menu : ${row}" class="card me-3 p-2">
+            <a th:href="@{'/' + ${menu['path']} + '/list'}" th:text="${menu['label']}" class="menu-label"></a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

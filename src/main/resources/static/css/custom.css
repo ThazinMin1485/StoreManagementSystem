@@ -1,0 +1,74 @@
+.custom-bg {
+ background-color:#c6beb1;
+}
+.main-content {
+flex-grow: 1;
+}
+
+.container {
+margin-top: 50px;
+}
+
+.card {
+width: 20%;
+height: 150px;
+border-radius: 15px;
+justify-content: center;
+align-items: center;
+color: white;
+background-image: linear-gradient(45deg, #6d4c35, #edcea2 50%, #937868)
+}
+.menu-label {
+text-decoration: none;
+color: #b9772b;
+}
+
+.menu-label:hover {
+color: white;
+}
+
+.footer {
+ position: fixed;
+ left: 0;
+ bottom: 0;
+ width: 100%;
+ height: 25px;
+}
+
+.btn-container {
+margin-left: 25%;
+
+}
+
+.btn-category {
+width: 70px;
+height: 40px;
+justify-content: center;
+align-items: center;
+background-color: #4b4b46;
+color: #e4e4e1;
+}
+
+.btn-category:hover {
+background-color: #937868;
+color: #e4e4e1;
+}
+
+.form {
+border: 1px solid #333333;
+width: 300px;
+padding: 50px;
+}
+
+.btn-download {
+width: 150px;
+height: 40px;
+justify-content: center;
+align-items: center;
+background-color: #4b4b46;
+color: #e4e4e1;
+}
+
+.excel-download {
+width: 160px;
+}
