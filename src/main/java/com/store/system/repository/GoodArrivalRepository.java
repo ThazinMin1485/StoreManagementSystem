@@ -1,6 +1,6 @@
 package com.store.system.repository;
 
-import com.store.system.entity.Category;
+import com.store.system.entity.GoodArrival;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface GoodArrivalRepository extends JpaRepository<GoodArrival, Long> {
 
- @Query("Select c from Category c where LOWER(c.categoryName) LIKE LOWER(CONCAT('%', :keyword, '%'))")
- public Page<Category> findCategoryBySearch(String keyword, Pageable pageable);
- }
+    @Query("Select g from GoodArrival g where Lower(g.good.goodName) like Lower(CONCAT('%', :keyword, '%'))")
+    Page<GoodArrival> findBySearch(String keyword, Pageable pageable);
+}

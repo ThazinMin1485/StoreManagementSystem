@@ -11,8 +11,8 @@ public class Category {
     @Column(name = "category_id")
     Long id;
 
-    @Column(nullable = false)
-    String category_name;
+    @Column(name = "category_name",nullable = false)
+    String categoryName;
 
     @Column(nullable = false)
     Boolean del_flag;
@@ -23,7 +23,7 @@ public class Category {
 
     public Category(CategoryDTO dto) {
         this.id = dto.getId();
-        this.category_name = dto.getCategory_name();
+        this.categoryName = dto.getCategoryName();
         this.del_flag = dto.getDel_flag();
     }
 
@@ -35,12 +35,12 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Boolean getDel_flag() {

@@ -13,8 +13,8 @@
 <div class="container d-flex justify-content-center align-items-center">
     <form th:action="@{/category/create}" th:object="${category}" method="post" class="form" >
         <label>Category Name</label>
-        <input type="text" th:field="*{category_name}" placeholder="Enter Category name" />
-        <div th:if="${#fields.hasErrors('category_name')}" th:errors="*{category_name}" class="text-danger"></div>
+        <input type="text" th:field="*{categoryName}" placeholder="Enter Category name" />
+        <div th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}" class="text-danger"></div>
         <button type="submit" class="btn btn-dark mt-3">Add</button>
         <button type="button" th:onclick="|window.location.href='@{/category/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
     </form>

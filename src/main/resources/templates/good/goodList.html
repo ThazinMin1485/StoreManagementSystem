@@ -8,10 +8,33 @@
     <link rel="stylesheet" th:href="@{/css/custom.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <script>
+        const goodsTable = initTable({
+            endpoint: "/good/data",
+            tableId: "dataTable",
+            paginationId: "pagination",
+            pageSizeId: "pageSize",
+            downloadPdfEndpoint: "/good/download/pdf",
+            downloadExcelEndpoint: "/good/download/excel",
+            fileName: "goodList",
+            columns: [
+                "goodName",
+                "quantity",
+                "kg",
+                "category.categoryName",
+                (item) => `<a href="/good/edit/${item.id}" class="text-dark">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>`,
+                (item) => `<a href="/good/delete/${item.id}" class="text-dark">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>`
+            ]
+        });
+    </script>
 </head>
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
-<div class="container mt-8 d-flex justify-content-center align-items-center">
+<div class="container mt-5 mb-5 d-flex justify-content-center align-items-center">
 <a href="/good/create" class="btn btn-category d-flex me-3">
     <i class="fa-solid fa-plus"></i>
     <p class="mt-3">Add</p>
@@ -25,22 +48,36 @@
         <p class="mt-3">Excel Download</p>
     </a>
 </div>
+
 <div class="container mt-3 w-50 justify-content-center">
+    <div class="d-flex mb-1">
+        <div>
+    <select id="pageSize" onchange="changePageSize()">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+    </select>
+        </div>
+        <div class="ms-auto">
+            <input type="text" id="searchInput" placeholder="Search..." class="mb-3">
+        </div>
+    </div>
 <table class="table table-striped" id="dataTable">
     <thead class="table-dark ">
     <tr>
-        <th onclick="changeSort('id')">ID</th>
-        <th onclick="changeSort('good_name')">Name</th>
-        <th onclick="changeSort('quantity')">Quantity</th>
-        <th onclick="changeSort('kg')">Kg</th>
-        <th onclick="changeSort('category_id')">Category Type</th>
+        <th>No</th>
+        <th>Name<i class="fa-solid fa-sort ms-3" onclick="sortTable('goodName')"></i></th>
+        <th>Quantity<i class="fa-solid fa-sort ms-3" onclick="sortTable('quantity')"></i></th>
+        <th>Kg<i class="fa-solid fa-sort ms-3" onclick="sortTable('kg')"></i></th>
+        <th>Category Type<i class="fa-solid fa-sort ms-3" onclick="sortTable('category.categoryName')"></i></th>
         <th colspan="2">Actions</th>
     </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
-    <div id="pagination" style="margin-top: 10px;" class="d-flex justify-content-center"></div>
+    <div id="pagination" style="margin-top: 10px;" class="d-flex justify-content-center mb-5"></div>
 </div>
 <div th:include="~{./common/footer :: footer}"></div>
 </body>

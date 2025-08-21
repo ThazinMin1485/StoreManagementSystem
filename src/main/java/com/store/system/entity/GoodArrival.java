@@ -1,7 +1,11 @@
 package com.store.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.store.system.dto.GoodArrivalDTO;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -28,7 +32,24 @@ public class GoodArrival {
 
     Double overhead;
 
-    Date arrivalTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate arrivalTime;
+
+    public GoodArrival() {
+        super();
+    }
+
+    public GoodArrival(GoodArrivalDTO dto) {
+        this.id = dto.getId();
+        this.arrivalTime = dto.getArrivalTime();
+        this.good = dto.getGood();
+        this.kg =dto.getKg();
+        this.quantity = dto.getQuantity();
+        this.overhead = dto.getOverhead();
+        this.purchasePrice = dto.getPurchasePrice();
+        this.transportationCost = dto.getTransportationCost();
+    }
 
     public Long getId() {
         return id;
@@ -86,11 +107,11 @@ public class GoodArrival {
         this.overhead = overhead;
     }
 
-    public Date getArrivalTime() {
+    public LocalDate getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(Date arrivalTime) {
+    public void setArrivalTime(LocalDate arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 }

@@ -16,8 +16,16 @@ public class GoodService {
     @Autowired
     private GoodRepository goodRepository;
 
+    public List<Good> getList() {
+        return goodRepository.findAll();
+    }
+
     public Page<Good> getGoodList(Pageable pageable) {
         return goodRepository.findAll(pageable);
+    }
+
+    public Page<Good> getGoodListBySearch(String keyword, Pageable pageable) {
+        return goodRepository.findByKeyword(keyword, pageable);
     }
 
     public void createGood(Good good) {

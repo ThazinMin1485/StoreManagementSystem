@@ -14,8 +14,8 @@
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{del_flag}">
         <label>Name</label>
-        <input type="text" id="name" th:field="*{category_name}">
-        <div th:if="${#fields.hasErrors('category_name')}" th:errors="*{category_name}" class="text-danger"></div>
+        <input type="text" id="name" th:field="*{categoryName}">
+        <div th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}" class="text-danger"></div>
         <button type="submit" class="btn btn-dark mt-3">Update</button>
         <button type="button" onclick="history.back()" class="btn mt-3 btn-outline-danger">Cancel</button>
     </form>

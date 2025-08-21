@@ -15,8 +15,8 @@ public class Good {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Column(nullable = false)
-    String good_name;
+    @Column(nullable = false, name = "good_name")
+    String goodName;
 
     Long quantity;
 
@@ -31,7 +31,7 @@ public class Good {
 
     public Good(GoodDTO dto) {
         this.id = dto.getId();
-        this.good_name = dto.getGood_name();
+        this.goodName = dto.getGoodName();
         this.category = dto.getCategory();
         this.kg = dto.getKg();
         this.del_flag = false;
@@ -54,20 +54,20 @@ public class Good {
         this.id = id;
     }
 
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+
     public Category getCategory() {
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public String getGood_name() {
-        return good_name;
-    }
-
-    public void setGood_name(String good_name) {
-        this.good_name = good_name;
     }
 
     public Boolean getDel_flag() {

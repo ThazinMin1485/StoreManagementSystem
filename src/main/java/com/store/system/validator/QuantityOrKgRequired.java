@@ -6,11 +6,11 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = QuantityXorKgValidator.class)
+@Constraint(validatedBy = QuantityOrKgValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface QuantityXorKgRequired {
-    String message() default "You must fill at least 0 in one of quantity or kg";
+public @interface QuantityOrKgRequired {
+    String message() default "Either quantity or kg must be set, but not both";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

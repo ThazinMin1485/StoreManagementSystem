@@ -2,28 +2,34 @@ let currentPage = 0;
 let pageSize = 5;
 let currentSortBy = "id";
 let currentSortDir = "asc";
-let currentConfig;
-let currentKeyword = "";
 function loadGoods(page) {
 currentPage = page;
-        fetch(`${currentConfig.endpoint}?page=${page}&size=${pageSize}&sortBy=${currentSortBy}&sortDir=${currentSortDir}&keyword=${currentKeyword}`)
+        fetch(`/good/data?page=${page}&size=${pageSize}&sortBy=${currentSortBy}&sortDir=${currentSortDir}`)
             .then(res => res.json())
             .then(data => {
                 // Update table body
                 const tbody = document.querySelector("#dataTable tbody");
                 tbody.innerHTML = "";
                 data.content.forEach((item, index) => {
-                    let row = `<tr><td>${page * pageSize + index + 1}</td>`;
-                                        currentConfig.columns.forEach(col => {
-                                            if (typeof col === "function") {
-                                                row += `<td>${col(item)}</td>`;
-                                            } else {
-                                                let value = col.split('.').reduce((o, key) => o?.[key] ?? "", item);
-                                                row += `<td>${value}</td>`;
-                                            }
-                                        });
-                                        row += "</tr>";
-                                        tbody.innerHTML += row;
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${page * pageSize + index + 1}</td>
+                            <td>${item.goodName}</td>
+                            <td>${item.quantity ?? ""}</td>
+                            <td>${item.kg ?? ""}</td>
+                            <td>${item.category.categoryName}</td>
+                             <td>
+                                            <a href="/good/edit/${item.id}" class="text-dark">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/good/delete/${item.id}" class="text-dark">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                        </tr>
+                    `;
                 });
 
                 // Update pagination
@@ -44,20 +50,19 @@ currentPage = page;
                     };
                     if (i === page) {
                     btn.disabled = true;
-                    btn.classList.add("bg-dark","text-white")
+                    btn.classList.add("bg-dark","text-white","me-1")
                     }
-                    btn.classList.add("me-2")
                     pagination.appendChild(btn);
                 }
                 const nextBtn = document.createElement("button");
                 nextBtn.classList.add("ms-2")
                                 nextBtn.innerHTML =`<i class="fa-solid fa-angles-right"></i>`;
-                                nextBtn.disabled = (page === data.totalPages - 1) || (data.totalPages === 0);
+                                nextBtn.disabled = page === data.totalPages - 1;
                                 nextBtn.onclick = () => loadGoods(page+1);
                                 pagination.appendChild(nextBtn);
             });
     }
-function sortTable(column) {
+        function sortTable(column) {
             if (currentSortBy === column) {
                 // toggle asc/desc
                 currentSortDir = currentSortDir === 'asc' ? 'desc' : 'asc';
@@ -72,40 +77,14 @@ function sortTable(column) {
         pageSize = document.getElementById("pageSize").value;
         loadGoods(0);
         }
-
-        function initTable(config) {
-        currentConfig = config;
-        }
     document.addEventListener("DOMContentLoaded", () => {
-    let searchText = document.getElementById("searchInput");
-    searchText.addEventListener("keyup", function () {
-            currentKeyword = this.value.toLowerCase();
-            console.log("currentKeyword-->", currentKeyword);
-            loadGoods(currentPage);
-        });
-    setTimeout(() => {
-            const successMsg = document.getElementById("success");
-            const errorMsg = document.getElementById("error");
-
-            if (successMsg) {
-                successMsg.style.transition = "opacity 0.5s ease";
-                successMsg.style.opacity = "0";
-                setTimeout(() => successMsg.remove(), 500); // remove after fade
-            }
-
-            if (errorMsg) {
-                errorMsg.style.transition = "opacity 0.5s ease";
-                errorMsg.style.opacity = "0";
-                setTimeout(() => errorMsg.remove(), 500);
-            }
-        }, 3000);
     loadGoods(currentPage)
     let downloadPdfBtn = document.getElementById("downloadPdfBtn");
         if(downloadPdfBtn) {
         downloadPdfBtn.addEventListener("click", (e) => {
                 e.preventDefault();
-                const fileName = `${currentConfig.fileName}_${Date.now()}.pdf`;
-                            fetch(`${currentConfig.downloadPdfEndpoint}?page=${currentPage}&size=${pageSize}&sortBy=${currentSortBy}&sortDir=${currentSortDir}&keyword=${currentKeyword}`)
+                const fileName = `goodList_${Date.now()}.pdf`;
+                            fetch(`/good/download/pdf?page=${currentPage}&size=${pageSize}&sortBy=${currentSortBy}&sortDir=${currentSortDir}`)
                                 .then(resp => resp.blob())
                                 .then(blob => {
                                     const url = window.URL.createObjectURL(blob);
@@ -122,8 +101,8 @@ function sortTable(column) {
                         if(downloadExcelBtn) {
                         downloadExcelBtn.addEventListener("click", (e) => {
                         e.preventDefault();
-                        const fileName = `${currentConfig.fileName}_${Date.now()}.xlsx`;
-                                                    fetch(`${currentConfig.downloadExcelEndpoint}?page=${currentPage}&size=${pageSize}&sortBy=${currentSortBy}&sortDir=${currentSortDir}&keyword=${currentKeyword}`)
+                        const fileName = `goodList_${Date.now()}.xlsx`;
+                                                    fetch(`/good/download/excel?page=${currentPage}&size=${pageSize}&sortBy=${currentSortBy}&sortDir=${currentSortDir}`)
                                                         .then(resp => resp.blob())
                                                         .then(blob => {
                                                             const url = window.URL.createObjectURL(blob);

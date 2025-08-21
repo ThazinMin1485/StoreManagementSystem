@@ -11,7 +11,7 @@ public class GoodDTO {
     private Long id;
 
     @NotBlank(message = "Good Name cannot be empty")
-    private String good_name;
+    private String goodName;
 
     private Long quantity;
 
@@ -26,7 +26,7 @@ public class GoodDTO {
     public GoodDTO(Good good) {
         this.id = good.getId();
         this.category = good.getCategory();
-        this.good_name = good.getGood_name();
+        this.goodName = good.getGoodName();
         this.quantity = good.getQuantity();
         this.kg = good.getKg();
         this.del_flag = good.getDel_flag();
@@ -51,12 +51,12 @@ public class GoodDTO {
         this.id = id;
     }
 
-    public String getGood_name() {
-        return good_name;
+    public @NotBlank(message = "Good Name cannot be empty") String getGoodName() {
+        return goodName;
     }
 
-    public void setGood_name(String good_name) {
-        this.good_name = good_name;
+    public void setGoodName(@NotBlank(message = "Good Name cannot be empty") String goodName) {
+        this.goodName = goodName;
     }
 
     public Long getQuantity() {

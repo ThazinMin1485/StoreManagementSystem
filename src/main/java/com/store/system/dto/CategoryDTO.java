@@ -2,13 +2,15 @@ package com.store.system.dto;
 
 
 import com.store.system.entity.Category;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
 
 public class CategoryDTO {
     private Long id;
 
     @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters")
-    String category_name;
+    @Column(name = "category_name")
+    String categoryName;
 
     Boolean del_flag;
 
@@ -20,12 +22,12 @@ public class CategoryDTO {
         this.id = id;
     }
 
-    public String getCategory_name() {
-        return category_name;
+    public @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters") String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
+    public void setCategoryName(@Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters") String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Boolean getDel_flag() {
@@ -41,7 +43,7 @@ public class CategoryDTO {
     }
 
     public CategoryDTO(Category category) {
-        this.category_name = category.getCategory_name();
+        this.categoryName = category.getCategoryName();
         this.id = category.getId();
         this.del_flag = category.getDel_flag();
     }

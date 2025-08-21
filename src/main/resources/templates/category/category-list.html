@@ -7,6 +7,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/custom.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    <script>
+        const categoryTable = initTable({
+            endpoint: "/category/data",
+            tableId: "dataTable",
+            paginationId: "pagination",
+            pageSizeId: "pageSize",
+            downloadPdfEndpoint: "/category/download/pdf",
+            downloadExcelEndpoint: "/category/download/excel",
+            fileName: "downloadList",
+            columns: [
+                "categoryName",
+                (item) => `<a href="/category/edit/${item.id}" class="text-dark">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </a>`,
+                (item) => `<a href="/category/delete/${item.id}" class="text-dark">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>`
+            ]
+        });
+    </script>
 </head>
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
@@ -17,24 +38,37 @@
 </a>
 </div>
 <div class="container mt-3 w-50 justify-content-center">
-<table class="table table-striped">
+    <div class="d-flex mb-1">
+        <div>
+        <select id="pageSize" onchange="changePageSize()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+        </select>
+        </div>
+        <div class="ms-auto">
+            <input type="text" id="searchInput" placeholder="Search..." class="mb-3">
+        </div>
+    </div>
+<table class="table table-striped" id="dataTable">
     <thead class="table-dark ">
     <tr>
-        <th>ID</th>
+        <th>No</th>
         <th>Name</th>
         <th colspan="2">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="item : ${categoryList}">
-        <td th:text="${item.id}"></td>
-        <td th:text="${item.category_name}"></td>
-        <td><a th:href="@{/category/edit/{id}(id=${item.id})}" class="text-dark"><i class="fa-solid fa-pen-to-square"></i></a></td>
-        <td><a th:href="@{/category/delete/{id}(id=${item.id})}" class="text-dark"><i class="fa-solid fa-trash"></i></a></td>
-    </tr>
-
     </tbody>
 </table>
+    <div id="pagination" style="margin-top: 10px;" class="d-flex justify-content-center mb-3"></div>
+</div>
+<div th:if="${error}" class="mt-3 alert alert-danger text-danger d-flex justify-content-center" id="success">
+    <p th:text="${error}"></p>
+</div>
+<div th:if="${success}" class="alert alert-success mt-3 text-success d-flex justify-content-center" id="error">
+    <p th:text="${success}"></p>
 </div>
 <div th:include="~{./common/footer :: footer}"></div>
 </body>
