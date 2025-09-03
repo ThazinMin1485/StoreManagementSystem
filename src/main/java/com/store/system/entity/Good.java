@@ -23,7 +23,10 @@ public class Good {
     Double kg;
 
     @Column(nullable = false)
-    Boolean del_flag;
+    boolean del_flag;
+
+    @Column(nullable = false)
+    boolean kilo;
 
     public Good() {
         super();
@@ -36,6 +39,7 @@ public class Good {
         this.kg = dto.getKg();
         this.del_flag = false;
         this.quantity = dto.getQuantity();
+        this.kilo = dto.isKilo();
     }
 
     public Long getQuantity() {
@@ -70,19 +74,23 @@ public class Good {
         this.category = category;
     }
 
-    public Boolean getDel_flag() {
-        return del_flag;
-    }
-
-    public void setDel_flag(Boolean del_flag) {
-        this.del_flag = del_flag;
-    }
-
     public Double getKg() {
         return kg;
     }
 
     public void setKg(Double kg) {
         this.kg = kg;
+    }
+
+    public boolean isDel_flag() {
+        return del_flag;
+    }
+
+    public boolean isKilo() {
+        return kilo;
+    }
+
+    public void setKilo(boolean kilo) {
+        this.kilo = kilo;
     }
 }

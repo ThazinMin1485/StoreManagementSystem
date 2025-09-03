@@ -55,10 +55,14 @@ color: #e4e4e1;
 }
 
 .form {
-border: 1px solid #333333;
+border: 1px solid #bfb8ac;
+border-radius: 8px;
 width: 300px;
 padding: 50px;
 }
+
+.register-form {
+padding: 40px;}
 
 .btn-download {
 width: 150px;
@@ -71,4 +75,16 @@ color: #e4e4e1;
 
 .excel-download {
 width: 160px;
+}
+
+.btn-price {
+width: 120px;
+}
+
+.bg-gray {
+background-color: rgba(239, 239, 239, 0.3);
+}
+
+label{
+display: block;
 }

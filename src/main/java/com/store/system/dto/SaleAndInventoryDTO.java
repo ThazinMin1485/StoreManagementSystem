@@ -1,55 +1,41 @@
-package com.store.system.entity;
+package com.store.system.dto;
 
-import com.store.system.dto.SaleAndInventoryDTO;
-import jakarta.persistence.*;
+import com.store.system.entity.Good;
+import com.store.system.entity.SaleAndInventory;
+import com.store.system.entity.Voucher;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "sale&inventory")
-public class SaleAndInventory {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SaleAndInventoryDTO {
     Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "good_id")
     private Good good;
 
-    @ManyToOne
-    @JoinColumn(name = "voucher_id")
     private Voucher voucher;
 
-    @Column(nullable = false)
     String status;
 
-    @Column(nullable = false, name = "sold_quantity")
     Long soldQuantity;
 
-    @Column(nullable = false, name = "left_quantity")
     Long leftQuantity;
 
-    @Column(nullable = false)
     LocalDate dateAndTime;
 
-    @Column(nullable = false, name = "del_flag")
     Boolean delFlag;
 
-    public SaleAndInventory() {
+    public SaleAndInventoryDTO() {
         super();
     }
 
-    public SaleAndInventory(SaleAndInventoryDTO dto) {
-        this.id = dto.getId();
-        this.good = dto.getGood();
-        this.voucher = dto.getVoucher();
-        this.delFlag = dto.getDelFlag();
-        this.dateAndTime = dto.getDateAndTime();
-        this.status = dto.getStatus();
-        this.leftQuantity = dto.getLeftQuantity();
-        this.soldQuantity = dto.getSoldQuantity();
-
+    public SaleAndInventoryDTO(SaleAndInventory inventory) {
+        this.id = inventory.getId();
+        this.good = inventory.getGood();
+        this.voucher= inventory.getVoucher();
+        this.dateAndTime = inventory.getDateAndTime();
+        this.status = inventory.getStatus();
+        this.soldQuantity = inventory.getSoldQuantity();
+        this.leftQuantity = inventory.getLeftQuantity();
+        this.delFlag = inventory.getDelFlag();
     }
 
     public Long getId() {
@@ -84,14 +70,6 @@ public class SaleAndInventory {
         this.status = status;
     }
 
-    public LocalDate getDateAndTime() {
-        return dateAndTime;
-    }
-
-    public void setDateAndTime(LocalDate dateAndTime) {
-        this.dateAndTime = dateAndTime;
-    }
-
     public Long getSoldQuantity() {
         return soldQuantity;
     }
@@ -106,6 +84,14 @@ public class SaleAndInventory {
 
     public void setLeftQuantity(Long leftQuantity) {
         this.leftQuantity = leftQuantity;
+    }
+
+    public LocalDate getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public void setDateAndTime(LocalDate dateAndTime) {
+        this.dateAndTime = dateAndTime;
     }
 
     public Boolean getDelFlag() {

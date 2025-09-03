@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "good_arrival")
@@ -14,6 +13,7 @@ public class GoodArrival {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "arrival_id")
     Long id;
 
     @ManyToOne

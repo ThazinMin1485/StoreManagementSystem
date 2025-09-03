@@ -78,11 +78,13 @@ function sortTable(column) {
         }
     document.addEventListener("DOMContentLoaded", () => {
     let searchText = document.getElementById("searchInput");
+    if(searchText) {
     searchText.addEventListener("keyup", function () {
-            currentKeyword = this.value.toLowerCase();
-            console.log("currentKeyword-->", currentKeyword);
-            loadGoods(currentPage);
-        });
+                currentKeyword = this.value.toLowerCase();
+                console.log("currentKeyword-->", currentKeyword);
+                loadGoods(currentPage);
+            });
+            }
     setTimeout(() => {
             const successMsg = document.getElementById("success");
             const errorMsg = document.getElementById("error");

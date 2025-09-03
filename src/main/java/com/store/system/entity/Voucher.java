@@ -1,5 +1,6 @@
 package com.store.system.entity;
 
+import com.store.system.dto.VoucherDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,15 +12,28 @@ public class Voucher {
     @Column(name = "voucher_id")
     Long id;
 
-    @Column(nullable = false)
-    String voucher_no;
+    @Column(nullable = false, name = "voucher_no")
+    String voucherNo;
 
     Double tax;
 
-    Double total_price;
+    @Column(name = "total_price")
+    Double totalPrice;
 
-    @Column(nullable = false)
-    Boolean del_flag;
+    @Column(nullable = false, name = "del_flag")
+    Boolean delFlag;
+
+    public Voucher(){
+        super();
+    }
+
+    public Voucher(VoucherDTO dto) {
+        this.id = dto.getId();
+        this.tax = dto.getTax();
+        this.voucherNo = dto.getVoucherNo();
+        this.totalPrice = dto.getTotalPrice();
+        this.delFlag = dto.getDelFlag();
+    }
 
     public Long getId() {
         return id;
@@ -27,14 +41,6 @@ public class Voucher {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getVoucher_no() {
-        return voucher_no;
-    }
-
-    public void setVoucher_no(String voucher_no) {
-        this.voucher_no = voucher_no;
     }
 
     public Double getTax() {
@@ -45,19 +51,27 @@ public class Voucher {
         this.tax = tax;
     }
 
-    public Double getTotal_price() {
-        return total_price;
+    public String getVoucherNo() {
+        return voucherNo;
     }
 
-    public void setTotal_price(Double total_price) {
-        this.total_price = total_price;
+    public void setVoucherNo(String voucherNo) {
+        this.voucherNo = voucherNo;
     }
 
-    public Boolean getDel_flag() {
-        return del_flag;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setDel_flag(Boolean del_flag) {
-        this.del_flag = del_flag;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Boolean getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
     }
 }

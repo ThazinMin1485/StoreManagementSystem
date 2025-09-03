@@ -9,7 +9,7 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/dashboard")
     public String home(Model model) {
         List<Map<String, String>> menuItems = List.of(Map.of("label", "Category", "path", "category"), Map.of("label", "Good", "path", "good"), Map.of("label", "GoodArrival", "path", "arrival"), Map.of("label", "GoodDetail", "path", "goodDetail"), Map.of("label", "SaleAndInventory", "path", "saleAndInventory"), Map.of("label", "Voucher", "path", "voucher"));
         List<List<Map<String, String>>> menuRows = List.of(menuItems.subList(0, 3), // 00, 01, 02
@@ -18,5 +18,10 @@ public class HomeController {
         );
         model.addAttribute("menuItems", menuRows);
         return "index";
+    }
+
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/dashboard";  // secure path
     }
 }

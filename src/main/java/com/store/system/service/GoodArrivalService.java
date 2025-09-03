@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class GoodArrivalService {
 
@@ -33,5 +36,9 @@ public class GoodArrivalService {
     public GoodArrivalDTO getArrivalById(Long id) {
         GoodArrival goodArrival = goodArrivalRepository.getReferenceById(id);
         return new GoodArrivalDTO(goodArrival);
+    }
+
+    public List<GoodArrival> getArrivalByGoodId(Long id, LocalDate fromDate, LocalDate toDate) {
+        return goodArrivalRepository.getArrivalByData(id, fromDate, toDate);
     }
 }

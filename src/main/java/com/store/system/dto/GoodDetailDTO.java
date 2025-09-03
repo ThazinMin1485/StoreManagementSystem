@@ -1,22 +1,17 @@
-package com.store.system.entity;
+package com.store.system.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.store.system.dto.GoodDetailDTO;
-import jakarta.persistence.*;
+import com.store.system.entity.Good;
+import com.store.system.entity.GoodDetail;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "good_detail")
-public class GoodDetail {
+public class GoodDetailDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "good_id")
     private Good good;
 
     Long quantity;
@@ -25,35 +20,34 @@ public class GoodDetail {
 
     Double percent;
 
-    @Column(name = "selling_price", nullable = false)
     Double sellingPrice;
 
     String photo;
 
+    @NotNull(message = "Please fill From Date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "from_date")
     LocalDate fromDate;
 
+    @NotNull(message = "Please fill To Date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "to_date")
     LocalDate toDate;
 
-    public GoodDetail() {
+    public GoodDetailDTO() {
         super();
     }
 
-    public GoodDetail(GoodDetailDTO dto) {
-        this.id = dto.getId();
-        this.good = dto.getGood();
-        this.g = dto.getG();
-        this.quantity = dto.getQuantity();
-        this.sellingPrice = dto.getSellingPrice();
-        this.percent = dto.getPercent();
-        this.photo = dto.getPhoto();
-        this.fromDate = dto.getFromDate();
-        this.toDate = dto.getToDate();
+    public GoodDetailDTO(GoodDetail detail) {
+        this.id = detail.getId();
+        this.good = detail.getGood();
+        this.g = detail.getG();
+        this.quantity = detail.getQuantity();
+        this.percent = detail.getPercent();
+        this.photo = detail.getPhoto();
+        this.sellingPrice = detail.getSellingPrice();
+        this.fromDate = detail.getFromDate();
+        this.toDate = detail.getToDate();
     }
 
     public Long getId() {
@@ -62,6 +56,14 @@ public class GoodDetail {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Good getGood() {
+        return good;
+    }
+
+    public void setGood(Good good) {
+        this.good = good;
     }
 
     public Long getQuantity() {
@@ -118,13 +120,5 @@ public class GoodDetail {
 
     public void setToDate(LocalDate toDate) {
         this.toDate = toDate;
-    }
-
-    public Good getGood() {
-        return good;
-    }
-
-    public void setGood(Good good) {
-        this.good = good;
     }
 }

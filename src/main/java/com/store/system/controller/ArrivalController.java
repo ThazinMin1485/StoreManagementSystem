@@ -71,19 +71,24 @@ public class ArrivalController {
         } else {
             GoodArrival arrival = new GoodArrival(dto);
             GoodDTO good = goodService.getGoodById(dto.getGood().getId());
-            good.setQuantity(dto.getQuantity());
-            good.setKg(dto.getKg());
+            if (dto.getQuantity() != null) {
+                good.setQuantity(good.getQuantity() == null ? dto.getQuantity() : good.getQuantity() + dto.getQuantity());
+            }
+            if (dto.getKg() != null) {
+                good.setKg(good.getKg() == null ? dto.getKg() : good.getKg() + dto.getKg());
+
+            }
             goodService.saveGood(new Good(good));
             service.saveArrival(arrival);
             return "redirect:/arrival/list";
         }
     }
 
-    @GetMapping("/arrival/delete/{id}")
-    public String deleteArrival(@PathVariable Long id, Model model) {
-        service.deleteArrival(id);
-        return "redirect:/arrival/list";
-    }
+//    @GetMapping("/arrival/delete/{id}")
+//    public String deleteArrival(@PathVariable Long id, Model model) {
+//        service.deleteArrival(id);
+//        return "redirect:/arrival/list";
+//    }
 
     @GetMapping("/arrival/edit/{id}")
     public String goEdit(@PathVariable Long id, Model model) {
@@ -100,12 +105,7 @@ public class ArrivalController {
             model.addAttribute("good", goodService.getList());
             return "arrival/editArrival";
         }
-        GoodArrival arrival = new GoodArrival(dto);
-        GoodDTO good = goodService.getGoodById(dto.getGood().getId());
-        good.setQuantity(dto.getQuantity());
-        good.setKg(dto.getKg());
-        goodService.saveGood(new Good(good));
-        service.saveArrival(arrival);
+        updateArrival(dto);
         return "redirect:/arrival/list";
     }
 
@@ -144,4 +144,22 @@ public class ArrivalController {
         int[] numbers = new int[]{10, 20, 20, 10, 30, 40, 20, 30};
         commonService.writeExcelData(arrivalList, headers, arrival -> Arrays.asList(arrival.getGood().getGoodName(), arrival.getQuantity() == null ? "" : String.valueOf(arrival.getQuantity()), arrival.getKg() == null ? "" : String.valueOf(arrival.getKg()), arrival.getPurchasePrice() == null ? "" : String.valueOf(arrival.getPurchasePrice()), arrival.getTransportationCost() == null ? "" : String.valueOf(arrival.getTransportationCost()), arrival.getOverhead() == null ? "" : String.valueOf(arrival.getOverhead()), arrival.getArrivalTime().toString()), index, numbers, page, response, "ArrivalList");
     }
+
+    public void updateArrival(GoodArrivalDTO dto) {
+        GoodArrival arrival = new GoodArrival(dto);
+        GoodDTO good = goodService.getGoodById(dto.getGood().getId());
+        GoodArrivalDTO arrivalDTO = service.getArrivalById(dto.getId());
+        if (dto.getQuantity() != null || arrivalDTO.getQuantity() !=null) {
+            Long changedQuantity = arrivalDTO.getQuantity() != null ? dto.getQuantity()!= null ? dto.getQuantity() - arrivalDTO.getQuantity() : -arrivalDTO.getQuantity() : dto.getQuantity();
+            good.setQuantity(good.getQuantity() == null || good.getQuantity() == 0 ? changedQuantity : good.getQuantity() + changedQuantity);
+        }
+        if (dto.getKg() != null || arrivalDTO.getKg() != null) {
+            Double changedKg = arrivalDTO.getKg() != null ? dto.getKg() !=null ? dto.getKg() - arrivalDTO.getKg() : -arrivalDTO.getKg() : dto.getKg();
+            good.setKg(good.getKg() == null || good.getKg() == 0.0 ? changedKg : good.getKg() + changedKg);
+        }
+        goodService.saveGood(new Good(good));
+        service.saveArrival(arrival);
+    }
+
 }
+

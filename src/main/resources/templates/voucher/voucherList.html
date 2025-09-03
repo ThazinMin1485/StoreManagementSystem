@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Category List</title>
+    <title>Voucher List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/custom.css}">
@@ -10,19 +10,21 @@
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
     <script>
         const categoryTable = initTable({
-            endpoint: "/category/data",
+            endpoint: "/voucher/data",
             tableId: "dataTable",
             paginationId: "pagination",
             pageSizeId: "pageSize",
-            downloadPdfEndpoint: "/category/download/pdf",
-            downloadExcelEndpoint: "/category/download/excel",
-            fileName: "categoryList",
+            downloadPdfEndpoint: "/voucher/download/pdf",
+            downloadExcelEndpoint: "/voucher/download/excel",
+            fileName: "voucherList",
             columns: [
-                "categoryName",
-                (item) => `<a href="/category/edit/${item.id}" class="text-dark">
+                "voucherNo",
+                "tax",
+                "totalPrice",
+                (item) => `<a href="/voucher/edit/${item.id}" class="text-dark">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>`,
-                (item) => `<a href="/category/delete/${item.id}" class="text-dark">
+                (item) => `<a href="/voucher/delete/${item.id}" class="text-dark">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>`
             ]
@@ -31,37 +33,47 @@
 </head>
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
-<div class="container mt-8 btn-container">
-<a href="/category/create" class="btn btn-category d-flex ">
-    <i class="fa-solid fa-plus"></i>
-    <p class="mt-3">Add</p>
-</a>
+<div class="container mt-5 mb-5 d-flex justify-content-center align-items-center">
+    <a href="/voucher/create" class="btn btn-category d-flex me-3">
+        <i class="fa-solid fa-plus"></i>
+        <p class="mt-3">Add</p>
+    </a>
+    <a href="/voucher/download/pdf" class="btn btn-download d-flex me-3" id="downloadPdfBtn">
+        <i class="fa fa-download"></i>
+        <p class="mt-3">Pdf Download</p>
+    </a>
+    <a href="/voucher/download/excel" class="btn btn-download excel-download d-flex" id="downloadExcelBtn">
+        <i class="fa fa-download"></i>
+        <p class="mt-3">Excel Download</p>
+    </a>
 </div>
-<div class="container mt-3 w-50 justify-content-center">
+<div class="container mt-3 w-75 justify-content-center">
     <div class="d-flex mb-1">
         <div>
-        <select id="pageSize" onchange="changePageSize()">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-        </select>
+            <select id="pageSize" onchange="changePageSize()">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
         </div>
         <div class="ms-auto">
             <input type="text" id="searchInput" placeholder="Search..." class="mb-3">
         </div>
     </div>
-<table class="table table-striped" id="dataTable">
-    <thead class="table-dark ">
-    <tr>
-        <th>No</th>
-        <th>Name</th>
-        <th colspan="2">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+    <table class="table table-striped" id="dataTable">
+        <thead class="table-dark ">
+        <tr>
+            <th>No</th>
+            <th>Voucher No</th>
+            <th>Tax</th>
+            <th>Total Price</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
     <div id="pagination" style="margin-top: 10px;" class="d-flex justify-content-center mb-3"></div>
 </div>
 <div th:if="${error}" class="mt-3 alert alert-danger text-danger d-flex justify-content-center" id="success">

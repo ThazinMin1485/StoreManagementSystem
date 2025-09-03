@@ -17,7 +17,9 @@ public class GoodDTO {
 
     private Double kg;
 
-    private Boolean del_flag;
+    private boolean del_flag;
+
+    private boolean kilo;
 
     public GoodDTO() {
         super();
@@ -29,7 +31,8 @@ public class GoodDTO {
         this.goodName = good.getGoodName();
         this.quantity = good.getQuantity();
         this.kg = good.getKg();
-        this.del_flag = good.getDel_flag();
+        this.del_flag = good.isDel_flag();
+        this.kilo = good.isKilo();
     }
 
     @NotNull(message = "Please select a category type")
@@ -75,11 +78,19 @@ public class GoodDTO {
         this.kg = kg;
     }
 
-    public Boolean getDel_flag() {
+    public boolean isDel_flag() {
         return del_flag;
     }
 
-    public void setDel_flag(Boolean del_flag) {
+    public void setDel_flag(boolean del_flag) {
         this.del_flag = del_flag;
+    }
+
+    public boolean isKilo() {
+        return kilo;
+    }
+
+    public void setKilo(boolean kilo) {
+        this.kilo = kilo;
     }
 }
