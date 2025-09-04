@@ -39,6 +39,7 @@ public class GoodController {
     public String showGoodList() {
         return "good/goodList"; // just load the page, no data here
     }
+
     @GetMapping("/good/data")
     @ResponseBody
     public Page<Good> getGoodsData(

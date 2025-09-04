@@ -28,6 +28,9 @@ public class User {
     @Column(name = "user_type", nullable = false)
     String userType;
 
+    @Column(nullable = false)
+    Boolean enabled;
+
     public User() {
         super();
     }
@@ -40,6 +43,7 @@ public class User {
         this.phoneNo = dto.getPhoneNo();
         this.name = dto.getName();
         this.password = dto.getPassword();
+        this.enabled = dto.getEnabled();
     }
 
     public Long getId() {
@@ -96,5 +100,13 @@ public class User {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -9,6 +9,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body class="custom-bg">
-
+<div class="container d-flex justify-content-center align-items-center">
+    <form th:action="@{/verifyCode}" th:object="${userOtp}" method="post" class="form register-form bg-white">
+        <p>Please Enter Your Verification Code</p>
+        <label>Verification Code</label>
+        <input type="text" th:field="*{otp}"/>
+        <button type="submit" class="btn btn-dark mt-3">Verify</button>
+        <button type="button" th:onclick="|window.location.href='@{/login}'|" class="btn mt-3 btn-outline-danger">
+            Cancel
+        </button>
+    </form>
+    <div th:if="${errorMessage}">
+        <p class="text-danger" th:text="${errorMessage}"></p>
+    </div>
+</div>
 </body>
 </html>

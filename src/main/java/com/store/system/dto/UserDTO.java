@@ -26,6 +26,8 @@ public class UserDTO {
 
     String userType;
 
+    Boolean enabled;
+
     public UserDTO() {
         super();
     }
@@ -38,6 +40,7 @@ public class UserDTO {
         this.password = user.getPassword();
         this.phoneNo = user.getPhoneNo();
         this.userType = user.getUserType();
+        this.enabled = user.getEnabled();
     }
 
     public Long getId() {
@@ -94,5 +97,13 @@ public class UserDTO {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }
