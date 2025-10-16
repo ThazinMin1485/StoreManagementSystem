@@ -5,6 +5,7 @@ import com.store.system.entity.Good;
 import com.store.system.entity.GoodDetail;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -33,6 +34,8 @@ public class GoodDetailDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate toDate;
+
+    MultipartFile image;
 
     public GoodDetailDTO() {
         super();
@@ -120,5 +123,13 @@ public class GoodDetailDTO {
 
     public void setToDate(LocalDate toDate) {
         this.toDate = toDate;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 }

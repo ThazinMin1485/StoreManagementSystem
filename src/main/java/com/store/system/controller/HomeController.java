@@ -11,7 +11,7 @@ public class HomeController {
 
     @GetMapping("/dashboard")
     public String home(Model model) {
-        List<Map<String, String>> menuItems = List.of(Map.of("label", "Category", "path", "category"), Map.of("label", "Good", "path", "good"), Map.of("label", "GoodArrival", "path", "arrival"), Map.of("label", "GoodDetail", "path", "goodDetail"), Map.of("label", "SaleAndInventory", "path", "saleAndInventory"), Map.of("label", "Voucher", "path", "voucher"));
+        List<Map<String, String>> menuItems = List.of(Map.of("label", "Category", "path", "admin/category"), Map.of("label", "Good", "path", "admin/good"), Map.of("label", "GoodArrival", "path", "admin/arrival"), Map.of("label", "GoodDetail", "path", "admin/goodDetail"), Map.of("label", "SaleAndInventory", "path", "admin/saleAndInventory"), Map.of("label", "Voucher", "path", "admin/voucher"));
         List<List<Map<String, String>>> menuRows = List.of(menuItems.subList(0, 3), // 00, 01, 02
                 menuItems.subList(3, 5), // 10, 11
                 menuItems.subList(5, 6)  // 20

@@ -10,7 +10,7 @@
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
     <script>
         const goodsTable = initTable({
-            endpoint: "/good/data",
+            endpoint: "/admin/good/data",
             tableId: "dataTable",
             paginationId: "pagination",
             pageSizeId: "pageSize",
@@ -22,10 +22,10 @@
                 "quantity",
                 "kg",
                 "category.categoryName",
-                (item) => `<a href="/good/edit/${item.id}" class="text-dark">
+                (item) => `<a href="/admin/good/edit/${item.id}" class="text-dark">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>`,
-                (item) => `<a href="/good/delete/${item.id}" class="text-dark">
+                (item) => `<a href="/admin/good/delete/${item.id}" class="text-dark">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>`
             ]
@@ -35,15 +35,15 @@
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
 <div class="container mt-5 mb-5 d-flex justify-content-center align-items-center">
-<a href="/good/create" class="btn btn-category d-flex me-3">
+<a href="/admin/good/create" class="btn btn-category d-flex me-3">
     <i class="fa-solid fa-plus"></i>
     <p class="mt-3">Add</p>
 </a>
-    <a href="/good/download/pdf" class="btn btn-download d-flex me-3" id="downloadPdfBtn">
+    <a href="/admin/good/download/pdf" class="btn btn-download d-flex me-3" id="downloadPdfBtn">
         <i class="fa fa-download"></i>
         <p class="mt-3">Pdf Download</p>
     </a>
-    <a href="/good/download/excel" class="btn btn-download excel-download d-flex" id="downloadExcelBtn">
+    <a href="/admin/good/download/excel" class="btn btn-download excel-download d-flex" id="downloadExcelBtn">
         <i class="fa fa-download"></i>
         <p class="mt-3">Excel Download</p>
     </a>

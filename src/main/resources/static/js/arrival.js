@@ -67,7 +67,7 @@ switch(value) {
 function fetchSellingPriceData() {
 console.log(selectedValue, quantityValue,gValue,percentValue,fromDateValue,toDateValue)
 if(isValid(selectedValue) && (isValid(quantityValue) || isValid(gValue)) && isValid(percentValue) && isValid(fromDateValue) && isValid(toDateValue)){
-fetch(`/goodDetail/arrival?goodId=${selectedValue}&quantity=${quantityValue}&g=${gValue}&percent=${percentValue}&fromDate=${fromDateValue}&toDate=${toDateValue}`)
+fetch(`/admin/goodDetail/arrival?goodId=${selectedValue}&quantity=${quantityValue}&g=${gValue}&percent=${percentValue}&fromDate=${fromDateValue}&toDate=${toDateValue}`)
             .then(res => res.json())
             .then(data => {
             sellingPrice.value = data;
@@ -93,5 +93,36 @@ return true;
 } else {
 return false;
 }
+}
+
+function changeImage(event) {
+const reader = new FileReader();
+reader.onload = function() {
+let img = document.getElementById('imagePreview');
+let label = document.getElementById('photoLabel');
+if (!label) {
+                label = document.createElement('label');
+                label.id = 'photoLabel';
+                label.innerText = 'Photo';
+                label.style.display = 'block';
+                event.target.parentNode.insertBefore(label, event.target);
+            }
+
+            label.style.display = 'block';
+
+            // If <img> does not exist yet (no existing photo), create it dynamically
+            if (!img) {
+                img = document.createElement('img');
+                img.id = 'imagePreview';
+                img.style.width = '150px';
+                img.style.height = 'auto';
+                img.style.marginBottom = '10px';
+                event.target.parentNode.insertBefore(img, event.target);
+            }
+
+            img.src = reader.result; // Show selected image
+            img.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
 }
 

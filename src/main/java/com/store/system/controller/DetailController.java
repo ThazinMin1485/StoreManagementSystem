@@ -5,6 +5,7 @@ import com.store.system.dto.GoodDetailDTO;
 import com.store.system.entity.Good;
 import com.store.system.entity.GoodArrival;
 import com.store.system.entity.GoodDetail;
+import com.store.system.service.CloudinaryService;
 import com.store.system.service.DetailService;
 import com.store.system.service.GoodArrivalService;
 import com.store.system.service.GoodService;
@@ -20,10 +21,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class DetailController {
 
     @Autowired
@@ -34,6 +37,9 @@ public class DetailController {
 
     @Autowired
     private GoodArrivalService arrivalService;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @GetMapping("/goodDetail/list")
     public String showList() {
@@ -67,10 +73,14 @@ public class DetailController {
     }
 
     @PostMapping("/goodDetail/create")
-    public String createDetail(@ModelAttribute("goodDetail") GoodDetailDTO dto, Model model) {
+    public String createDetail(@ModelAttribute("goodDetail") GoodDetailDTO dto, Model model) throws IOException {
+        if(dto.getImage() != null && !dto.getImage().isEmpty()) {
+            String imgUrl = cloudinaryService.uploadFile(dto.getImage());
+            dto.setPhoto(imgUrl);
+        }
         GoodDetail detail = new GoodDetail(dto);
         service.saveData(detail);
-        return "redirect:/goodDetail/list";
+        return "redirect:/admin/goodDetail/list";
     }
 
     @GetMapping("/goodDetail/arrival")
@@ -82,7 +92,7 @@ public class DetailController {
         Double kg = arrivalList.stream().mapToDouble(a-> a.getKg() != null ? a.getKg() : 0).sum();
         Long qan = arrivalList.stream().mapToLong(a-> a.getQuantity() != null ? a.getQuantity() : 0).sum();
         System.out.println("totalCost"+totalCost + "," + percent);
-        System.out.println(qan);
+        System.out.println(kg);
         return calculateSellingPrice(totalCost, kg, qan, quantity, g, percent);
     }
 
@@ -95,15 +105,26 @@ public class DetailController {
         return "detail/editDetail";
     }
 
-    public String updateGoodDetail(@Valid @ModelAttribute("goodDetail")GoodDetailDTO dto, BindingResult result, Model model) {
+    @PostMapping("/goodDetail/update")
+    public String updateGoodDetail(@Valid @ModelAttribute("goodDetail")GoodDetailDTO dto, BindingResult result, Model model) throws IOException {
         if(result.hasErrors()) {
             List<Good> goodList = goodService.getList();
             model.addAttribute("goodDetail", dto);
             model.addAttribute("good", goodList);
             return "detail/editDetail";
         }
+        if(dto.getImage() != null && !dto.getImage().isEmpty()) {
+            String imgUrl = cloudinaryService.uploadFile(dto.getImage());
+            dto.setPhoto(imgUrl);
+        }
         service.saveData(new GoodDetail(dto));
-        return "redirect:/goodDetail/list";
+        return "redirect:/admin/goodDetail/list";
+    }
+
+    @GetMapping("/goodDetail/delete/{id}")
+    public String deleteGoodDetail(Model model, @PathVariable Long id) {
+        service.deleteDetail(id);
+        return "redirect:/admin/goodDetail/list";
     }
 
     public Double calculateSellingPrice(Double totalCost, Double kg, Long qan, Long quantity, Double g, Double percent) {

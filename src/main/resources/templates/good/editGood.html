@@ -15,7 +15,7 @@
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
 <div class="container d-flex justify-content-center align-items-center">
-    <form th:action="@{/good/edit}" th:object="${good}" method="post" class="form">
+    <form th:action="@{/admin/good/edit}" th:object="${good}" method="post" class="form">
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{del_flag}">
         <label>Good Name</label>
@@ -37,7 +37,7 @@
             <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
         </div>
         <button type="submit" class="btn btn-dark mt-3">Update</button>
-        <button type="button" th:onclick="|window.location.href='@{/good/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
+        <button type="button" th:onclick="|window.location.href='@{/admin/good/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
     </form>
 </div>
 <div th:include="~{./common/footer :: footer}"></div>

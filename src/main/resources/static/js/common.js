@@ -17,7 +17,16 @@ currentPage = page;
                                         currentConfig.columns.forEach(col => {
                                             if (typeof col === "function") {
                                                 row += `<td>${col(item)}</td>`;
+                                            } else if(col === "photo") {
+                                            let value = col.split('.').reduce((o, key) => o?.[key] ?? "", item);
+                                            console.log(value);
+                                            if(value != '') {
+                                            row += `<td> <img src="${value}" width="100" height="100" alt="Current Image"><br><br></td>`;
                                             } else {
+                                            row += `<td>${value}</td>`;
+                                            }
+                                            }
+                                            else {
                                                 let value = col.split('.').reduce((o, key) => o?.[key] ?? "", item);
                                                 row += `<td>${value}</td>`;
                                             }

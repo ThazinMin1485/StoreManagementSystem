@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class ArrivalController {
 
     @Autowired
@@ -80,7 +81,7 @@ public class ArrivalController {
             }
             goodService.saveGood(new Good(good));
             service.saveArrival(arrival);
-            return "redirect:/arrival/list";
+            return "redirect:/admin/arrival/list";
         }
     }
 
@@ -106,7 +107,7 @@ public class ArrivalController {
             return "arrival/editArrival";
         }
         updateArrival(dto);
-        return "redirect:/arrival/list";
+        return "redirect:/admin/arrival/list";
     }
 
     @GetMapping("/arrival/download/pdf")

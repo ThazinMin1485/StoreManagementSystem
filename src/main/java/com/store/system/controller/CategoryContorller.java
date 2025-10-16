@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class CategoryContorller {
     @Autowired
     private CategoryService categoryService;
@@ -61,7 +62,7 @@ public class CategoryContorller {
         category.setCategoryName(categoryDTO.getCategoryName());
         category.setDel_flag(false);
         categoryService.saveCategory(category);
-        return "redirect:/category/list";
+        return "redirect:/admin/category/list";
     }
 
     @GetMapping("/category/edit/{id}")
@@ -79,7 +80,7 @@ public class CategoryContorller {
         }
         Category catego = new Category(category);
         categoryService.updateCategory(catego);
-        return "redirect:/category/list";
+        return "redirect:/admin/category/list";
     }
 
     @GetMapping("/category/delete/{id}")
@@ -90,6 +91,6 @@ public class CategoryContorller {
         } catch(DataIntegrityViolationException e){
             redirectAttributes.addFlashAttribute("error", "Category is used and cannot be deleted!");
         }
-        return "redirect:/category/list";
+        return "redirect:/admin/category/list";
     }
 }

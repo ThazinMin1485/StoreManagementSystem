@@ -17,6 +17,7 @@ public class AdminInitializer {
                 User admin = new User();
                 admin.setName("admin");
                 admin.setEmail("admin@gmail.com");
+                admin.setEnabled(true);
                 admin.setPassword(encoder.encode("admin123"));
                 admin.setPhoneNo("09797078083");
                 admin.setUserType("admin");

@@ -12,7 +12,8 @@
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
 <div class="container d-flex justify-content-center align-items-center">
-    <form th:action="@{/goodDetail/update}" th:object="${goodDetail}" method="post" class="form">
+    <form th:action="@{/admin/goodDetail/update}" th:object="${goodDetail}" method="post" class="form" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}">
         <select th:field="*{good}" required class="mb-3" id="good_id">
             <option value="" disabled selected>Select Good</option>
             <option th:each="g : ${good}"
@@ -31,9 +32,14 @@
         <input type="date" th:field="*{toDate}" th:value="${#temporals.format(toDate, 'yyyy-MM-dd')}" class="mb-3" id="toDate"/>
         <label>Selling Price</label>
         <input type="number" th:field="*{sellingPrice}" step="0.001" class="mb-3 bg-gray" id="sellingPrice" readonly/>
-        <input type="file" th:field="*{photo}" class="mb-3" id="photo" />
-        <button type="submit" class="btn btn-dark mt-3">Add</button>
-        <button type="button" th:onclick="|window.location.href='@{/goodDetail/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
+        <label id="photoLabel" th:if="${goodDetail.photo}" style="display:block;">Photo</label>
+        <img id="imagePreview" th:if="${goodDetail.photo}" th:src="${goodDetail.photo}" style="display:block; width:150px; height:auto;"
+             alt="Image">
+        <input type="hidden" th:field="*{photo}">
+        <br>
+        <input type="file" th:field="*{image}" class="mb-3" id="image" accept="image/*" onchange="changeImage(event)" />
+        <button type="submit" class="btn btn-dark mt-3">Update</button>
+        <button type="button" th:onclick="|window.location.href='@{/admin/goodDetail/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
     </form>
 </div>
 <div th:include="~{./common/footer :: footer}"></div>

@@ -10,12 +10,12 @@
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
     <script>
         const arrivalTable = initTable({
-            endpoint: "/arrival/data",
+            endpoint: "/admin/arrival/data",
             tableId: "dataTable",
             paginationId: "pagination",
             pageSizeId: "pageSize",
-            downloadPdfEndpoint: "/arrival/download/pdf",
-            downloadExcelEndpoint: "/arrival/download/excel",
+            downloadPdfEndpoint: "/admin/arrival/download/pdf",
+            downloadExcelEndpoint: "/admin/arrival/download/excel",
             fileName: "arrivalList",
             columns: [
                 "good.goodName",
@@ -25,10 +25,10 @@
                     "transportationCost",
                     "overhead",
                     "arrivalTime",
-                (item) => `<a href="/arrival/edit/${item.id}" class="text-dark">
+                (item) => `<a href="/admin/arrival/edit/${item.id}" class="text-dark">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </a>`,
-<!--                (item) => `<a href="/arrival/delete/${item.id}" class="text-dark">-->
+<!--                (item) => `<a href="/admin/arrival/delete/${item.id}" class="text-dark">-->
 <!--                                                    <i class="fa-solid fa-trash"></i>-->
 <!--                                                </a>`-->
             ]
@@ -38,15 +38,15 @@
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
 <div class="container mt-5 mb-5 d-flex justify-content-center align-items-center">
-    <a href="/arrival/create" class="btn btn-category d-flex me-3">
+    <a href="/admin/arrival/create" class="btn btn-category d-flex me-3">
         <i class="fa-solid fa-plus"></i>
         <p class="mt-3">Add</p>
     </a>
-    <a href="/arrival/download/pdf" class="btn btn-download d-flex me-3" id="downloadPdfBtn">
+    <a href="/admin/arrival/download/pdf" class="btn btn-download d-flex me-3" id="downloadPdfBtn">
         <i class="fa fa-download"></i>
         <p class="mt-3">Pdf Download</p>
     </a>
-    <a href="/arrival/download/excel" class="btn btn-download excel-download d-flex" id="downloadExcelBtn">
+    <a href="/admin/arrival/download/excel" class="btn btn-download excel-download d-flex" id="downloadExcelBtn">
         <i class="fa fa-download"></i>
         <p class="mt-3">Excel Download</p>
     </a>

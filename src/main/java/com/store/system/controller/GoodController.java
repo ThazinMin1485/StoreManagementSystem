@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class GoodController {
     @Autowired
     private CategoryService categoryService;
@@ -76,13 +77,13 @@ public class GoodController {
         }
         Good good = new Good(goodDTO);
         goodService.saveGood(good);
-        return "redirect:/good/list";
+        return "redirect:/admin/good/list";
     }
 
     @GetMapping("/good/delete/{id}")
     public String deleteGood(@PathVariable Long id) {
         goodService.deleteGood(id);
-        return "redirect:/good/list";
+        return "redirect:/admin/good/list";
     }
 
     @GetMapping("/good/edit/{id}")
@@ -103,7 +104,7 @@ public class GoodController {
         }
         Good good = new Good(goodDTO);
         goodService.saveGood(good);
-        return "redirect:/good/list";
+        return "redirect:/admin/good/list";
     }
 
     @GetMapping("/good/download/pdf")

@@ -15,7 +15,7 @@
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
 <div class="container d-flex justify-content-center align-items-center">
-    <form th:action="@{/arrival/create}" th:object="${arrival}" method="post" class="form">
+    <form th:action="@{/admin/arrival/create}" th:object="${arrival}" method="post" class="form">
         <select th:field="*{good}" required class="mb-3" id="selectGood">
             <option value="" disabled selected>Select Good</option>
             <option th:each="g : ${good}"
@@ -38,7 +38,7 @@
         <input type="date" th:field="*{arrivalTime}" placeholder="Enter Arrival Time" th:value="${#temporals.format(arrivalTime, 'yyyy-MM-dd')}" />
         <div th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}" class="text-danger mb-3"></div>
         <button type="submit" class="btn btn-dark mt-3">Add</button>
-        <button type="button" th:onclick="|window.location.href='@{/arrival/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
+        <button type="button" th:onclick="|window.location.href='@{/admin/arrival/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
     </form>
 </div>
 <div th:include="~{./common/footer :: footer}"></div>

@@ -26,4 +26,8 @@ public class DetailService {
         return new GoodDetailDTO(detail);
     }
 
+    public void deleteDetail(Long id) {
+        detailRepository.deleteById(id);
+    }
+
 }

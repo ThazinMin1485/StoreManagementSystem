@@ -10,7 +10,7 @@
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
 <div class="container d-flex justify-content-center align-items-center">
-    <form th:action="@{/category/update}" th:object="${category}" method="post" class="form">
+    <form th:action="@{/admin/category/update}" th:object="${category}" method="post" class="form">
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{del_flag}">
         <label>Name</label>

@@ -12,7 +12,7 @@
 <body>
 <div th:include="~{./common/navbar :: header}"></div>
 <div class="container d-flex justify-content-center align-items-center">
-    <form th:action="@{/goodDetail/create}" th:object="${goodDetail}" method="post" class="form">
+    <form th:action="@{/admin/goodDetail/create}" th:object="${goodDetail}" method="post" class="form" enctype="multipart/form-data">
         <select th:field="*{good}" required class="mb-3" id="good_id">
             <option value="" disabled selected>Select Good</option>
             <option th:each="g : ${good}"
@@ -31,9 +31,9 @@
         <input type="date" th:field="*{toDate}" step="0.001" class="mb-3" id="toDate"/>
         <label>Selling Price</label>
         <input type="number" th:field="*{sellingPrice}" step="0.001" class="mb-3" id="sellingPrice" readonly/>
-        <input type="file" th:field="*{photo}" class="mb-3" id="photo" />
+        <input type="file" th:field="*{image}" class="mb-3" id="image" accept="image/*" onchange="changeImage(event)" />
         <button type="submit" class="btn btn-dark mt-3">Add</button>
-        <button type="button" th:onclick="|window.location.href='@{/goodDetail/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
+        <button type="button" th:onclick="|window.location.href='@{/admin/goodDetail/list}'|"  class="btn mt-3 btn-outline-danger">Cancel</button>
     </form>
 </div>
 <div th:include="~{./common/footer :: footer}"></div>
