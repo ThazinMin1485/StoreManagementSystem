@@ -28,4 +28,10 @@ public class CloudinaryService {
                 ObjectUtils.asMap("folder", "spring-demo"));
         return uploadResult.get("url").toString();
     }
+
+    public void deleteFile(String publicId) throws IOException {
+        Map options = ObjectUtils.asMap("invalidate", true);
+        Map result = cloudinary.uploader().destroy(publicId, options);
+        System.out.println("Delete result: " + result);
+    }
 }

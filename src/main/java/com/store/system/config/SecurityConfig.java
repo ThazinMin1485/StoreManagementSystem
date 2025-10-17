@@ -1,5 +1,6 @@
 package com.store.system.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    private CustomLoginSuccessHandler successHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -27,12 +31,12 @@ public class SecurityConfig {
 
                         // User-only pages
                         .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers("/", "/dashboard").hasAnyRole("USER", "ADMIN")
+//                        .requestMatchers("/").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login")
                         .usernameParameter("email")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/dashboard", true)
+                        .successHandler(successHandler)
                         .failureUrl("/login?error=true")
                         .permitAll())
                 .logout(logout -> logout

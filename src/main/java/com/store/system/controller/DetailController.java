@@ -114,6 +114,12 @@ public class DetailController {
             return "detail/editDetail";
         }
         if(dto.getImage() != null && !dto.getImage().isEmpty()) {
+            GoodDetailDTO detail = service.getGoodDetail(dto.getId());
+            if(detail.getPhoto() != null) {
+                String publicID = getPublicIdFromUrl(detail.getPhoto());
+                System.out.println("public Id:" + publicID);
+                cloudinaryService.deleteFile(publicID);
+            }
             String imgUrl = cloudinaryService.uploadFile(dto.getImage());
             dto.setPhoto(imgUrl);
         }
@@ -122,7 +128,12 @@ public class DetailController {
     }
 
     @GetMapping("/goodDetail/delete/{id}")
-    public String deleteGoodDetail(Model model, @PathVariable Long id) {
+    public String deleteGoodDetail(Model model, @PathVariable Long id) throws IOException {
+        GoodDetailDTO detail = service.getGoodDetail(id);
+        if(detail.getPhoto() != null) {
+            String publicID = getPublicIdFromUrl(detail.getPhoto());
+            cloudinaryService.deleteFile(publicID);
+        }
         service.deleteDetail(id);
         return "redirect:/admin/goodDetail/list";
     }
@@ -135,4 +146,29 @@ public class DetailController {
         Double averageSale = averageCost + averageCost * (percent/100);
         return isG ? averageSale * g : averageSale * quantity;
     }
+
+    public String getPublicIdFromUrl(String url) {
+        if (url == null) return null;
+        int uploadIndex = url.indexOf("/upload/");
+        if (uploadIndex == -1) return null;
+
+        // Get everything after '/upload/'
+        String pathAfterUpload = url.substring(uploadIndex + 8); // skip '/upload/'
+
+        // Remove version number (v1234567/)
+        if (pathAfterUpload.startsWith("v")) {
+            int slashIndex = pathAfterUpload.indexOf('/');
+            if (slashIndex != -1) {
+                pathAfterUpload = pathAfterUpload.substring(slashIndex + 1);
+            }
+        }
+
+        // Remove file extension
+        int dotIndex = pathAfterUpload.lastIndexOf('.');
+        if (dotIndex != -1) {
+            pathAfterUpload = pathAfterUpload.substring(0, dotIndex);
+        }
+        return pathAfterUpload;
+    }
+
 }
