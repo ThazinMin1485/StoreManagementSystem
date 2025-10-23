@@ -55,11 +55,11 @@ public class DetailController {
                                              @RequestParam(defaultValue = "") String keyword) {
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-//        if(keyword != null && !keyword.isEmpty()) {
-//            return service.getDetailBySearch(keyword, pageable);
-//        } else {
+        if(keyword != null && !keyword.isEmpty()) {
+            return service.getDetailListByKeyword(keyword, pageable);
+        } else {
             return service.getDetailList(pageable);
-//        }
+        }
 
     }
 

@@ -30,4 +30,8 @@ public class DetailService {
         detailRepository.deleteById(id);
     }
 
+    public Page<GoodDetail> getDetailListByKeyword(String keyword, Pageable page) {
+        return detailRepository.findDetailByKeyword(keyword, page);
+    }
+
 }

@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/signUp", "/verifyCode", "/css/**", "/js/**")
                         .permitAll()
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/api/**").authenticated()
                         // Admin-only pages
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
